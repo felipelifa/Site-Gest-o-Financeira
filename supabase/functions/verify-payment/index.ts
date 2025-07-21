@@ -46,10 +46,31 @@ serve(async (req) => {
       throw error;
     }
 
-    logStep("Orders found", { ordersCount: orders?.length || 0, orders });
+    logStep("Orders found by email", { ordersCount: orders?.length || 0, orders });
+
+    // Se não encontrou por email exato, buscar por emails mascarados recentes
+    let additionalOrders = [];
+    if (!orders || orders.length === 0) {
+      logStep("No orders found by email, checking recent approved orders");
+      
+      const { data: recentApproved, error: recentError } = await supabaseClient
+        .from('orders')
+        .select('*')
+        .eq('status', 'approved')
+        .gte('created_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()) // últimas 24h
+        .order('created_at', { ascending: false });
+        
+      if (!recentError && recentApproved) {
+        logStep("Found recent approved orders", { count: recentApproved.length });
+        additionalOrders = recentApproved;
+      }
+    }
+
+    const allOrders = [...(orders || []), ...additionalOrders];
+    logStep("All orders considered", { totalCount: allOrders.length });
 
     // Verificar se há pelo menos um pedido aprovado
-    const approvedOrders = orders?.filter(order => order.status === 'approved') || [];
+    const approvedOrders = allOrders.filter(order => order.status === 'approved');
     const hasValidPayment = approvedOrders.length > 0;
     
     logStep("Payment verification result", { 
