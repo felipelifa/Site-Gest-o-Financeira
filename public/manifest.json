@@ -1,0 +1,32 @@
+{
+  "name": "DinDin Mágico - Controle Financeiro",
+  "short_name": "DinDin Mágico",
+  "description": "Aplicativo completo de controle financeiro pessoal offline",
+  "start_url": "/standalone.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#8B5CF6",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "categories": ["finance", "productivity"],
+  "lang": "pt-BR",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Adicionar Gasto",
+      "short_name": "Novo Gasto",
+      "description": "Adicionar um novo gasto rapidamente",
+      "url": "/standalone.html?action=add-expense",
+      "icons": [{ "src": "/favicon.ico", "sizes": "32x32" }]
+    }
+  ]
+}
