@@ -271,53 +271,60 @@ const SalesSlides = () => {
 
     // Slide 4: Recursos visuais (sem demo externa)
     {
-      background: "bg-gradient-accent",
-      content: (
-        <div className="text-center text-white space-y-10">
-          <h2 className="text-5xl font-bold">
-            Recursos que você vai amar
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <AppMockup 
-              icon={BarChart3}
-              title="Relatórios Visuais"
-              description="Gráficos coloridos que mostram exatamente onde seu dinheiro está indo"
-            />
-            <AppMockup 
-              icon={Target}
-              title="Metas Inteligentes"
-              description="Defina objetivos e acompanhe seu progresso em tempo real"
-            />
-            <AppMockup 
-              icon={Calendar}
-              title="Planejamento Mensal"
-              description="Organize seus gastos e receitas de forma visual e prática"
-            />
-            <AppMockup 
-              icon={Gift}
-              title="Controle Total"
-              description="Categorias automáticas, lembretes e muito mais"
-            />
-          </div>
-          <div className="bg-white/10 rounded-2xl p-6 max-w-2xl mx-auto">
-            <p className="text-2xl font-semibold mb-4">
-              ⚡ Tudo isso em segundos, não em horas!
-            </p>
-            <p className="text-lg opacity-90">
-              Enquanto outros apps complicam, o DinDin Mágico simplifica sua vida financeira
-            </p>
-          </div>
-          <Button 
-            onClick={nextSlide} 
-            variant="secondary" 
-            size="lg"
-            className="text-xl px-10 py-5 rounded-full animate-pulse"
-          >
-            Quero ter isso! <Sparkles className="ml-2 h-6 w-6" />
-          </Button>
-        </div>
-      )
-    },
+  background: "bg-gradient-to-br from-[#7f5af0] via-[#635bff] to-[#00cfff]",
+  content: (
+    <div className="text-center text-white space-y-14 px-2 md:px-0">
+      <h2 className="text-5xl md:text-6xl font-bold mb-8 drop-shadow-xl">
+        <span className="bg-gradient-to-r from-white via-[#e0e0ff] to-[#a0e9ff] bg-clip-text text-transparent">
+          Recursos que você vai amar
+        </span>
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <AppMockup 
+          icon={BarChart3}
+          title="Relatórios Visuais"
+          description="Gráficos coloridos que mostram exatamente onde seu dinheiro está indo"
+          className="bg-white/70 border border-[#7f5af0]/10 backdrop-blur-md rounded-2xl shadow-lg text-primary"
+        />
+        <AppMockup 
+          icon={Target}
+          title="Metas Inteligentes"
+          description="Defina objetivos e acompanhe seu progresso em tempo real"
+          className="bg-white/70 border border-[#635bff]/10 backdrop-blur-md rounded-2xl shadow-lg text-primary"
+        />
+        <AppMockup 
+          icon={Calendar}
+          title="Planejamento Mensal"
+          description="Organize seus gastos e receitas de forma visual e prática"
+          className="bg-white/70 border border-[#00cfff]/10 backdrop-blur-md rounded-2xl shadow-lg text-primary"
+        />
+        <AppMockup 
+          icon={Gift}
+          title="Controle Total"
+          description="Categorias automáticas, lembretes e muito mais"
+          className="bg-white/70 border border-[#7f5af0]/10 backdrop-blur-md rounded-2xl shadow-lg text-primary"
+        />
+      </div>
+      <div className="bg-white/20 rounded-3xl p-8 max-w-2xl mx-auto mt-12 shadow-2xl border border-white/10">
+        <p className="text-2xl font-semibold mb-2 text-[#7f5af0] drop-shadow">
+          ⚡ Tudo isso em segundos, não em horas!
+        </p>
+        <p className="text-lg text-white/90 opacity-90">
+          Enquanto outros apps complicam, o DinDin Mágico simplifica sua vida financeira
+        </p>
+      </div>
+      <Button 
+        onClick={nextSlide} 
+        variant="secondary" 
+        size="lg"
+        className="text-xl px-10 py-5 rounded-full shadow-xl bg-[#7f5af0] hover:bg-[#635bff] text-white border-0 transition-all hover:scale-105"
+      >
+        Quero ter isso! <Sparkles className="ml-2 h-6 w-6" />
+      </Button>
+    </div>
+  )
+},
+
 
     // Slide 5: Conversão melhorada
     {
