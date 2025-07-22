@@ -208,10 +208,10 @@ const SalesSlides = () => {
 
 
     // Slide 3: Solução visual
-   {
+ {
   background: "bg-gradient-to-br from-[#56ffa7] via-[#46d9e5] to-[#3d7fff]",
   content: (
-    <div className="text-center text-white space-y-14 px-2 md:px-0">
+    <div className="text-center text-white space-y-14 px-2 md:px-0 pt-12 pb-24">
       <h2 className="text-5xl md:text-6xl font-bold mb-8 drop-shadow-xl">
         <span className="bg-gradient-to-r from-white via-[#d9fffa] to-[#7fc8ff] bg-clip-text text-transparent">
           Conheça o DinDin Mágico
@@ -273,7 +273,8 @@ const SalesSlides = () => {
       </Button>
     </div>
   )
-},
+}
+
 
     // Slide 4: Recursos visuais (sem demo externa)
     {
