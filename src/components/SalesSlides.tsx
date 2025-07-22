@@ -168,33 +168,32 @@ const SalesSlides = () => {
     },
 
     // Slide 2: Dor ampliada
-    {
-  background: "bg-gradient-to-br from-[#380404] via-[#18191f] to-[#23273a]", // Vermelho vinho profundo para um cinza/azul escuro
+ {
+  background: "bg-gradient-to-br from-red-900 via-slate-900 to-slate-700",
   content: (
-    <div className="text-center text-white space-y-14 px-2 md:px-0">
-      <div className="text-8xl md:text-9xl animate-pulse drop-shadow-[0_4px_32px_rgba(255,0,70,0.25)]">💸</div>
-      <h2 className="text-5xl md:text-6xl font-bold leading-tight mb-6 drop-shadow-xl">
-        <span className="bg-gradient-to-r from-[#ff3864] via-white to-[#ffbe7b] bg-clip-text text-transparent">
-          Cansado de ver seu dinheiro desaparecer?
-        </span>
+    <div className="text-center text-white space-y-10 mb-28"> {/* <-- margin-bottom aumentada! */}
+      <div className="text-9xl animate-pulse">💸</div>
+      <h2 className="text-5xl font-bold leading-tight">
+        Cansado de ver seu dinheiro desaparecer?
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-        <Card className="bg-gradient-to-br from-[#431417]/80 to-[#1c1b22]/70 border border-[#ff3864]/20 p-8 rounded-2xl shadow-lg hover:scale-105 transition-transform duration-200">
-          <TrendingDown className="h-14 w-14 mx-auto mb-4 text-[#ff3864] drop-shadow" />
-          <h3 className="text-2xl font-bold mb-2 text-[#ffd6e0]">Gastos descontrolados</h3>
-          <p className="text-white/85">Não sabe onde seu dinheiro está indo</p>
+        <Card className="bg-red-900/30 border-red-500/20 p-6">
+          <TrendingDown className="h-12 w-12 mx-auto mb-4 text-red-400" />
+          <h3 className="text-xl font-bold mb-2">Gastos descontrolados</h3>
+          <p className="text-white/80">Não sabe onde seu dinheiro está indo</p>
         </Card>
-        <Card className="bg-gradient-to-br from-[#431417]/80 to-[#1c1b22]/70 border border-[#ff3864]/20 p-8 rounded-2xl shadow-lg hover:scale-105 transition-transform duration-200">
-          <Clock className="h-14 w-14 mx-auto mb-4 text-[#ffbe7b] drop-shadow" />
-          <h3 className="text-2xl font-bold mb-2 text-[#ffbe7b]">Tempo perdido</h3>
-          <p className="text-white/85">Horas com planilhas complicadas</p>
+        <Card className="bg-red-900/30 border-red-500/20 p-6">
+          <Clock className="h-12 w-12 mx-auto mb-4 text-red-400" />
+          <h3 className="text-xl font-bold mb-2">Tempo perdido</h3>
+          <p className="text-white/80">Horas com planilhas complicadas</p>
         </Card>
-        <Card className="bg-gradient-to-br from-[#431417]/80 to-[#1c1b22]/70 border border-[#ff3864]/20 p-8 rounded-2xl shadow-lg hover:scale-105 transition-transform duration-200">
-          <Target className="h-14 w-14 mx-auto mb-4 text-[#6ce0ff] drop-shadow" />
-          <h3 className="text-2xl font-bold mb-2 text-[#6ce0ff]">Sonhos distantes</h3>
-          <p className="text-white/85">Metas que nunca saem do papel</p>
+        <Card className="bg-red-900/30 border-red-500/20 p-6">
+          <Target className="h-12 w-12 mx-auto mb-4 text-red-400" />
+          <h3 className="text-xl font-bold mb-2">Sonhos distantes</h3>
+          <p className="text-white/80">Metas que nunca saem do papel</p>
         </Card>
       </div>
+      {/* BOTÃO COM ESTILO MELHORADO */}
       <Button 
         onClick={nextSlide} 
         variant="accent" 
