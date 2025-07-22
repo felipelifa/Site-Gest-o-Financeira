@@ -208,68 +208,72 @@ const SalesSlides = () => {
 
 
     // Slide 3: Solução visual
-    {
-      background: "bg-gradient-success",
-      content: (
-        <div className="text-center text-white space-y-10">
-          <h2 className="text-5xl font-bold mb-8">
-            Conheça o DinDin Mágico
-          </h2>
-          <div className="relative max-w-md mx-auto">
-            {/* Mockup do celular */}
-            <div className="bg-black rounded-3xl p-2 shadow-2xl">
-              <div className="bg-gradient-primary rounded-2xl p-8 h-96 relative overflow-hidden">
-                <div className="text-center space-y-4">
-                  <Wallet className="h-16 w-16 mx-auto text-white" />
-                  <h3 className="text-2xl font-bold">R$ 2.847,50</h3>
-                  <p className="text-sm opacity-80">Saldo disponível</p>
-                  <div className="space-y-2 text-left mt-8">
-                    <div className="bg-white/20 rounded-lg p-3 flex justify-between">
-                      <span>🍕 Alimentação</span>
-                      <span>R$ 420,00</span>
-                    </div>
-                    <div className="bg-white/20 rounded-lg p-3 flex justify-between">
-                      <span>🚗 Transporte</span>
-                      <span>R$ 280,00</span>
-                    </div>
-                    <div className="bg-white/20 rounded-lg p-3 flex justify-between">
-                      <span>🎯 Meta: Viagem</span>
-                      <span className="text-green-300">67%</span>
-                    </div>
-                  </div>
+   {
+  background: "bg-gradient-to-br from-[#56ffa7] via-[#46d9e5] to-[#3d7fff]",
+  content: (
+    <div className="text-center text-white space-y-14 px-2 md:px-0">
+      <h2 className="text-5xl md:text-6xl font-bold mb-8 drop-shadow-xl">
+        <span className="bg-gradient-to-r from-white via-[#d9fffa] to-[#7fc8ff] bg-clip-text text-transparent">
+          Conheça o DinDin Mágico
+        </span>
+      </h2>
+      <div className="relative max-w-xs mx-auto">
+        {/* Mockup do celular */}
+        <div className="bg-black/80 rounded-3xl p-2 shadow-2xl border-4 border-white/10">
+          <div className="bg-gradient-to-br from-[#65e8b7] via-[#68e1fd] to-[#3d7fff] rounded-2xl p-8 h-96 relative overflow-hidden shadow-inner">
+            <div className="text-center space-y-4">
+              <Wallet className="h-16 w-16 mx-auto text-white drop-shadow-md" />
+              <h3 className="text-2xl font-bold bg-gradient-to-r from-white to-[#8fffd9] bg-clip-text text-transparent">
+                R$ 2.847,50
+              </h3>
+              <p className="text-base opacity-80 font-medium">Saldo disponível</p>
+              <div className="space-y-2 text-left mt-8">
+                <div className="bg-white/20 rounded-lg p-3 flex justify-between font-medium shadow-sm">
+                  <span>🍕 Alimentação</span>
+                  <span>R$ 420,00</span>
+                </div>
+                <div className="bg-white/20 rounded-lg p-3 flex justify-between font-medium shadow-sm">
+                  <span>🚗 Transporte</span>
+                  <span>R$ 280,00</span>
+                </div>
+                <div className="bg-white/20 rounded-lg p-3 flex justify-between font-medium shadow-sm">
+                  <span>🎯 Meta: Viagem</span>
+                  <span className="text-green-300 font-semibold">67%</span>
                 </div>
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-            <div className="text-center space-y-2">
-              <Zap className="h-8 w-8 mx-auto text-yellow-300" />
-              <p className="font-semibold">Rápido</p>
-            </div>
-            <div className="text-center space-y-2">
-              <Heart className="h-8 w-8 mx-auto text-red-300" />
-              <p className="font-semibold">Intuitivo</p>
-            </div>
-            <div className="text-center space-y-2">
-              <Shield className="h-8 w-8 mx-auto text-blue-300" />
-              <p className="font-semibold">Seguro</p>
-            </div>
-            <div className="text-center space-y-2">
-              <Sparkles className="h-8 w-8 mx-auto text-purple-300" />
-              <p className="font-semibold">Mágico</p>
-            </div>
-          </div>
-          <Button 
-            onClick={nextSlide} 
-            variant="secondary" 
-            size="lg"
-            className="text-xl px-10 py-5 rounded-full"
-          >
-            Ver recursos <ChevronRight className="ml-2 h-6 w-6" />
-          </Button>
         </div>
-      )
-    },
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto mt-10">
+        <div className="text-center space-y-2">
+          <Zap className="h-8 w-8 mx-auto text-yellow-400 drop-shadow" />
+          <p className="font-semibold text-lg text-white/90">Rápido</p>
+        </div>
+        <div className="text-center space-y-2">
+          <Heart className="h-8 w-8 mx-auto text-pink-400 drop-shadow" />
+          <p className="font-semibold text-lg text-white/90">Intuitivo</p>
+        </div>
+        <div className="text-center space-y-2">
+          <Shield className="h-8 w-8 mx-auto text-blue-400 drop-shadow" />
+          <p className="font-semibold text-lg text-white/90">Seguro</p>
+        </div>
+        <div className="text-center space-y-2">
+          <Sparkles className="h-8 w-8 mx-auto text-purple-400 drop-shadow" />
+          <p className="font-semibold text-lg text-white/90">Mágico</p>
+        </div>
+      </div>
+      <Button 
+        onClick={nextSlide} 
+        variant="secondary" 
+        size="lg"
+        className="text-xl px-10 py-5 rounded-full shadow-lg bg-white/20 hover:bg-white/30 text-white border-0 transition-all hover:scale-105"
+      >
+        Ver recursos <ChevronRight className="ml-2 h-6 w-6" />
+      </Button>
+    </div>
+  )
+},
 
     // Slide 4: Recursos visuais (sem demo externa)
     {
