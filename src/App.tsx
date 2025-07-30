@@ -12,6 +12,7 @@ import DashboardPage from "./pages/DashboardPage";
 import SettingsPage from "./pages/SettingsPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import DownloadPage from "./pages/DownloadPage";
+import KiwifyLoginPage from "./pages/KiwifyLoginPage";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -29,6 +30,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/auth" element={<AuthPage />} />
+                <Route path="/kiwify-login" element={<KiwifyLoginPage />} />
                 <Route path="/checkout" element={<CheckoutPage />} />
                 <Route path="/download" element={<DownloadPage />} />
                 <Route 
