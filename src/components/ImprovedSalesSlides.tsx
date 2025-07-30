@@ -28,7 +28,7 @@ const ImprovedSalesSlides = () => {
   };
 
   // URL do Kiwify - substitua pela sua URL real
-  const KIWIFY_CHECKOUT_URL = "https://kiwify.app/checkout/SEU_PRODUTO_ID";
+  const KIWIFY_CHECKOUT_URL = "https://pay.kiwify.com.br/eZRbvau";
 
   const handleKiwifyCheckout = () => {
     // Redirecionar para o checkout do Kiwify
