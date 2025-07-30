@@ -5,39 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { 
-  ChevronRight, 
-  ChevronLeft, 
-  Heart, 
-  TrendingUp, 
-  Shield, 
-  Smartphone,
-  Star,
-  Check,
-  ArrowRight,
-  Zap,
-  PiggyBank,
-  Target,
-  BarChart3,
-  Wallet,
-  Calendar,
-  Gift,
-  Clock,
-  Users,
-  Award,
-  Download,
-  Sparkles,
-  CreditCard,
-  DollarSign,
-  TrendingDown,
-  Play,
-  Pause,
-  CheckCircle2,
-  Crown,
-  Rocket,
-  Fire,
-  Timer
-} from "lucide-react";
+import { ChevronRight, ChevronLeft, Heart, TrendingUp, Shield, Smartphone, Star, Check, ArrowRight, Zap, PiggyBank, Target, BarChart3, Wallet, Calendar, Gift, Clock, Users, Award, Download, Sparkles, CreditCard, DollarSign, TrendingDown, Play, Pause, CheckCircle2, Crown, Rocket, Siren as Fire, Timer } from "lucide-react";
 
 const ImprovedSalesSlides = () => {
   const navigate = useNavigate();
