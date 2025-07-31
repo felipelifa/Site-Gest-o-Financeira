@@ -60,47 +60,71 @@ const SalesSlides = () => {
     window.location.href = '/checkout';
   };
 
-  const handleVerifyAccess = async () => {
-    if (!email) {
-      toast({
-        title: "Email obrigatório",
-        description: "Digite seu email para verificar o acesso.",
-        variant: "destructive",
-      });
-      return;
-    }
+const handleVerifyAccess = async () => {
+  if (!email) {
+    toast({
+      title: "Email obrigatório",
+      description: "Digite seu email para verificar o acesso.",
+      variant: "destructive",
+    });
+    return;
+  }
 
-    if (!email.includes("@")) {
-      toast({
-        title: "Email inválido",
-        description: "Digite um email válido.",
-        variant: "destructive",
-      });
-      return;
-    }
+  if (!email.includes("@")) {
+    toast({
+      title: "Email inválido",
+      description: "Digite um email válido.",
+      variant: "destructive",
+    });
+    return;
+  }
 
-    try {
-      setVerifying(true);
-      console.log('🔥 SALES: Verificando acesso para email:', email);
+  try {
+    setVerifying(true);
+    console.log('🔥 SALES: Verificando acesso para email:', email);
+    
+    const { data, error } = await supabase.functions.invoke('verify-payment', {
+      body: { email }
+    });
+
+    console.log('🔥 SALES: Resposta do verify-payment:', { data, error });
+
+    if (error) throw error;
+
+    if (data.hasValidPayment) {
+      console.log('🔥 SALES: Acesso liberado! Redirecionando...');
+      toast({
+        title: "Acesso liberado! 🎉",
+        description: "Redirecionando para a dashboard...",
+      });
       
-      const { data, error } = await supabase.functions.invoke('verify-payment', {
-        body: { email }
+      setTimeout(() => {
+        navigate(`/dashboard?email=${encodeURIComponent(email)}&verified=true`);
+      }, 1000);
+    } else {
+      console.log('🔥 SALES: Acesso negado. Orders:', data.orders);
+      toast({
+        title: "Acesso negado",
+        description: "Nenhum pagamento aprovado encontrado para este email.",
+        variant: "destructive",
       });
+    }
+  } catch (error) {
+    console.error('🔥 SALES: Erro ao verificar pagamento:', error);
+    toast({
+      title: "Erro",
+      description: "Erro ao verificar pagamento. Tente novamente.",
+      variant: "destructive",
+    });
+  } finally {
+    setVerifying(false);
+  }
+};
 
-      console.log('🔥 SALES: Resposta do verify-payment:', { data, error });
-
-      if (error) throw error;
-
-      if (data.hasValidPayment) {
-        console.log('🔥 SALES: Acesso liberado! Redirecionando...');
-        toast({
-          title: "Acesso liberado! 🎉",
-          description: "Redirecionando para o download...",
-        });
         
         // Redirecionar para a página de download com email
         setTimeout(() => {
-          navigate(`/download?email=${encodeURIComponent(email)}&verified=true`);
+          navigate(`/dashboard?email=${encodeURIComponent(email)}&verified=true`);
         }, 1000);
       } else {
         console.log('🔥 SALES: Acesso negado. Orders:', data.orders);
@@ -208,10 +232,10 @@ const SalesSlides = () => {
 
 
     // Slide 3: Solução visual
- {
+   {
   background: "bg-gradient-to-br from-[#56ffa7] via-[#46d9e5] to-[#3d7fff]",
   content: (
-    <div className="text-center text-white space-y-14 px-2 md:px-0 pt-12 pb-24">
+    <div className="text-center text-white space-y-14 px-2 md:px-0">
       <h2 className="text-5xl md:text-6xl font-bold mb-8 drop-shadow-xl">
         <span className="bg-gradient-to-r from-white via-[#d9fffa] to-[#7fc8ff] bg-clip-text text-transparent">
           Conheça o DinDin Mágico
@@ -273,8 +297,7 @@ const SalesSlides = () => {
       </Button>
     </div>
   )
-}
-
+},
 
     // Slide 4: Recursos visuais (sem demo externa)
     {
