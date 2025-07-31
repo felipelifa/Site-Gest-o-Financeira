@@ -34,9 +34,9 @@ serve(async (req) => {
     const paymentId = body.data.id;
     console.log('[WEBHOOK] Processing payment ID:', paymentId);
 
-    const paymentResponse = await fetch(`https://api.mercadopago.com/v1/payments/${paymentId}`, {
-      headers: {
-        'Authorization': `Bearer ${Deno.env.get('MERCADOPAGO_ACCESS_TOKEN')}`,
+        success: `https://dindinmagico.netlify.app/create-account?email=${encodeURIComponent(email)}&payment=success`,
+        failure: `https://dindinmagico.netlify.app/create-account?email=${encodeURIComponent(email)}&payment=failure`,
+        pending: `https://dindinmagico.netlify.app/create-account?email=${encodeURIComponent(email)}&payment=pending`
       },
     });
 

@@ -62,32 +62,9 @@ const ImprovedSalesSlides = () => {
     try {
       setVerifying(true);
       
-      // Verificar se existe uma compra aprovada no Kiwify
-      const { data, error } = await supabase.functions.invoke('verify-kiwify-purchase', {
-        body: { email }
-      });
-
-      if (error) throw error;
-
-      if (data.hasValidPurchase) {
-        toast({
-          title: "Acesso liberado! 🎉",
-          description: "Redirecionando para o dashboard...",
-        });
-        
-        // Criar conta automaticamente se não existir
-        await createUserAccount(email, data.customerData);
-        
-        setTimeout(() => {
-          navigate(`/dashboard`);
-        }, 1000);
-      } else {
-        toast({
-          title: "Acesso negado",
-          description: "Nenhuma compra aprovada encontrada para este email.",
-          variant: "destructive",
-        });
-      }
+      // Redirecionar para página de login por email
+      navigate(`/email-login?email=${encodeURIComponent(email)}`);
+      
     } catch (error) {
       console.error('Erro ao verificar compra:', error);
       toast({
@@ -100,61 +77,6 @@ const ImprovedSalesSlides = () => {
     }
   };
 
-  const createUserAccount = async (email: string, customerData: any) => {
-    try {
-      // Tentar fazer login primeiro
-      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: 'kiwify_temp_password' // Senha temporária
-      });
-
-      if (signInError) {
-        // Se não conseguir fazer login, criar conta
-        const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-          email: email,
-          password: 'kiwify_temp_password', // Senha temporária
-          options: {
-            data: {
-              full_name: customerData?.name || email.split('@')[0],
-              kiwify_customer_id: customerData?.id,
-              created_via: 'kiwify'
-            }
-          }
-        });
-
-        if (signUpError) {
-          console.error('Erro ao criar conta:', signUpError);
-          return;
-        }
-
-        // Ativar premium automaticamente
-        if (signUpData.user) {
-          await supabase
-            .from('profiles')
-            .update({
-              is_premium: true,
-              subscription_status: 'active',
-              kiwify_customer_id: customerData?.id
-            })
-            .eq('id', signUpData.user.id);
-        }
-      } else {
-        // Se conseguiu fazer login, ativar premium
-        if (signInData.user) {
-          await supabase
-            .from('profiles')
-            .update({
-              is_premium: true,
-              subscription_status: 'active',
-              kiwify_customer_id: customerData?.id
-            })
-            .eq('id', signInData.user.id);
-        }
-      }
-    } catch (error) {
-      console.error('Erro ao criar/atualizar conta:', error);
-    }
-  };
 
   const slides = [
     // Slide 1: Hook mais forte
@@ -945,30 +867,31 @@ const ImprovedSalesSlides = () => {
   return (
     <div className="min-h-screen overflow-hidden">
       {/* Seção de acesso para quem já comprou - FIXO NO TOPO */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-sm border-b border-white/10">
+      <div className="fixed top-0 left-0 right-0 z-40 bg-black/90 backdrop-blur-sm border-b border-white/10">
         <div className="max-w-4xl mx-auto px-4 py-3">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
             <div className="text-white text-sm">
-              <span className="font-semibold">✅ Já comprou no Kiwify?</span> Acesse sua conta:
+              <span className="font-semibold text-xs sm:text-sm">✅ Já tem conta?</span> 
+              <span className="text-xs sm:text-sm"> Acesse:</span>
             </div>
-            <div className="flex items-center gap-3 w-full sm:w-auto">
+            <div className="flex items-center gap-2 w-full sm:w-auto">
               <Input
                 type="email"
-                placeholder="Digite seu email do Kiwify"
+                placeholder="Digite seu email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/60 text-sm h-9 w-full sm:w-64"
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/60 text-xs sm:text-sm h-8 w-full sm:w-48"
               />
               <button 
                 onClick={handleVerifyAccess}
                 disabled={verifying}
-                className="h-9 px-4 whitespace-nowrap bg-green-600 hover:bg-green-700 text-white rounded-md font-medium text-sm transition-colors"
+                className="h-8 px-3 whitespace-nowrap bg-green-600 hover:bg-green-700 text-white rounded-md font-medium text-xs sm:text-sm transition-colors"
               >
                 {verifying ? (
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                  <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
                 ) : (
                   <>
-                    <Download className="h-4 w-4 mr-1" />
+                    <Download className="h-3 w-3 mr-1" />
                     Entrar
                   </>
                 )}
@@ -980,7 +903,7 @@ const ImprovedSalesSlides = () => {
 
       {/* Slide atual - com espaçamento para a barra fixa */}
       <div 
-        className={`min-h-screen flex items-center justify-center p-4 md:p-8 pt-20 transition-all duration-500 ${slides[currentSlide].background}`}
+        className={`min-h-screen flex items-center justify-center p-4 md:p-8 pt-16 transition-all duration-500 ${slides[currentSlide].background}`}
       >
         <div className="max-w-7xl mx-auto w-full">
           {slides[currentSlide].content}
@@ -988,7 +911,7 @@ const ImprovedSalesSlides = () => {
       </div>
 
       {/* Navegação melhorada */}
-      <div className="fixed bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 flex items-center space-x-4 bg-black/40 backdrop-blur-sm rounded-full px-4 md:px-6 py-2 md:py-3">
+      <div className="fixed bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 flex items-center space-x-4 bg-black/40 backdrop-blur-sm rounded-full px-4 md:px-6 py-2 md:py-3 z-30">
         {/* Botão anterior */}
         <button
           onClick={prevSlide}
@@ -1024,13 +947,13 @@ const ImprovedSalesSlides = () => {
       </div>
 
       {/* Contador de slides */}
-      <div className="fixed top-20 md:top-24 right-4 md:right-8 bg-black/40 backdrop-blur-sm rounded-full px-3 md:px-4 py-1 md:py-2 text-white text-sm md:text-base">
+      <div className="fixed top-16 md:top-20 right-4 md:right-8 bg-black/40 backdrop-blur-sm rounded-full px-3 md:px-4 py-1 md:py-2 text-white text-sm md:text-base z-30">
         {currentSlide + 1} / {totalSlides}
       </div>
 
       {/* Botão flutuante de compra */}
       {currentSlide >= 5 && (
-        <div className="fixed bottom-20 md:bottom-24 right-4 md:right-8">
+        <div className="fixed bottom-20 md:bottom-24 right-4 md:right-8 z-30">
           <button
             onClick={handleKiwifyCheckout}
             className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white px-6 py-3 rounded-full font-bold shadow-2xl hover:scale-105 transition-all animate-pulse"

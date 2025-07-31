@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Sparkles, Menu, User, LogOut, BarChart3, Target, Settings, CreditCard } from "lucide-react";
+import { Sparkles, Menu, User, LogOut, BarChart3, Target, Settings, CreditCard, Mail } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Link, useLocation } from "react-router-dom";
@@ -122,6 +122,13 @@ const Header = () => {
                 <DropdownMenuItem onClick={signOut} className="text-red-600">
                   <LogOut className="h-4 w-4 mr-2" />
                   Sair
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={() => window.location.href = '/email-login'}
+                  className="text-primary"
+                >
+                  <Mail className="h-4 w-4 mr-2" />
+                  Trocar de conta
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

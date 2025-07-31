@@ -81,40 +81,15 @@ const SalesSlides = () => {
 
     try {
       setVerifying(true);
-      console.log('🔥 SALES: Verificando acesso para email:', email);
       
-      const { data, error } = await supabase.functions.invoke('verify-payment', {
-        body: { email }
-      });
-
-      console.log('🔥 SALES: Resposta do verify-payment:', { data, error });
-
-      if (error) throw error;
-
-      if (data.hasValidPayment) {
-        console.log('🔥 SALES: Acesso liberado! Redirecionando...');
-        toast({
-          title: "Acesso liberado! 🎉",
-          description: "Redirecionando para o download...",
-        });
-        
-        // Redirecionar para a página de download com email
-        setTimeout(() => {
-          navigate(`/download?email=${encodeURIComponent(email)}&verified=true`);
-        }, 1000);
-      } else {
-        console.log('🔥 SALES: Acesso negado. Orders:', data.orders);
-        toast({
-          title: "Acesso negado",
-          description: "Nenhum pagamento aprovado encontrado para este email.",
-          variant: "destructive",
-        });
-      }
+      // Redirecionar para página de login por email
+      navigate(`/email-login?email=${encodeURIComponent(email)}`);
+      
     } catch (error) {
-      console.error('🔥 SALES: Erro ao verificar pagamento:', error);
+      console.error('Erro ao verificar acesso:', error);
       toast({
         title: "Erro",
-        description: "Erro ao verificar pagamento. Tente novamente.",
+        description: "Erro ao verificar acesso. Tente novamente.",
         variant: "destructive",
       });
     } finally {
@@ -620,33 +595,32 @@ const SalesSlides = () => {
   return (
     <div className="min-h-screen overflow-hidden">
       {/* Seção de acesso para quem já comprou - FIXO NO TOPO */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm border-b border-white/10">
+      <div className="fixed top-0 left-0 right-0 z-40 bg-black/80 backdrop-blur-sm border-b border-white/10">
         <div className="max-w-4xl mx-auto px-4 py-3">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
             <div className="text-white text-sm">
-              <span className="font-semibold">Já comprou?</span> Acesse o download:
+              <span className="font-semibold text-xs sm:text-sm">Já tem conta?</span> 
+              <span className="text-xs sm:text-sm"> Acesse:</span>
             </div>
-            <div className="flex items-center gap-3 w-full sm:w-auto">
+            <div className="flex items-center gap-2 w-full sm:w-auto">
               <Input
                 type="email"
                 placeholder="Digite seu email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/60 text-sm h-9 w-full sm:w-64"
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/60 text-xs sm:text-sm h-8 w-full sm:w-48"
               />
               <Button 
                 onClick={handleVerifyAccess}
                 disabled={verifying}
-                size="sm"
-                variant="accent"
-                className="h-9 px-4 whitespace-nowrap"
+                className="h-8 px-3 whitespace-nowrap bg-green-600 hover:bg-green-700 text-white rounded-md font-medium text-xs sm:text-sm transition-colors"
               >
                 {verifying ? (
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                  <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
                 ) : (
                   <>
-                    <Download className="h-4 w-4 mr-1" />
-                    Acessar
+                    <Download className="h-3 w-3 mr-1" />
+                    Entrar
                   </>
                 )}
               </Button>
@@ -657,7 +631,7 @@ const SalesSlides = () => {
 
       {/* Slide atual - com espaçamento para a barra fixa */}
       <div 
-        className={`min-h-screen flex items-center justify-center p-4 md:p-8 pt-20 transition-all duration-500 ${slides[currentSlide].background}`}
+        className={`min-h-screen flex items-center justify-center p-4 md:p-8 pt-16 transition-all duration-500 ${slides[currentSlide].background}`}
       >
         <div className="max-w-7xl mx-auto w-full">
           {slides[currentSlide].content}
@@ -665,7 +639,7 @@ const SalesSlides = () => {
       </div>
 
       {/* Navegação */}
-      <div className="fixed bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 flex items-center space-x-4 bg-black/30 backdrop-blur-sm rounded-full px-4 md:px-6 py-2 md:py-3">
+      <div className="fixed bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 flex items-center space-x-4 bg-black/30 backdrop-blur-sm rounded-full px-4 md:px-6 py-2 md:py-3 z-30">
         {/* Botão anterior */}
         <Button
           onClick={prevSlide}
@@ -703,7 +677,7 @@ const SalesSlides = () => {
       </div>
 
       {/* Contador de slides */}
-      <div className="fixed top-4 md:top-8 right-4 md:right-8 bg-black/30 backdrop-blur-sm rounded-full px-3 md:px-4 py-1 md:py-2 text-white text-sm md:text-base">
+      <div className="fixed top-16 md:top-20 right-4 md:right-8 bg-black/30 backdrop-blur-sm rounded-full px-3 md:px-4 py-1 md:py-2 text-white text-sm md:text-base z-30">
         {currentSlide + 1} / {totalSlides}
       </div>
     </div>
