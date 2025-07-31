@@ -195,6 +195,27 @@ const CreateAccountPage = () => {
                 {loading ? 'Criando conta...' : 'Criar Conta e Acessar'}
               </Button>
             </form>
+            
+            <div className="text-center">
+              <p className="text-sm text-muted-foreground">
+                Ainda não comprou?{" "}
+                <button 
+                  onClick={() => navigate('/checkout')}
+                  className="text-primary hover:underline font-medium"
+                >
+                  Comprar agora
+                </button>
+              </p>
+              <p className="text-sm text-muted-foreground mt-2">
+                Já tem conta?{" "}
+                <button 
+                  onClick={() => navigate('/email-login')}
+                  className="text-primary hover:underline font-medium"
+                >
+                  Fazer login
+                </button>
+              </p>
+            </div>
           </CardContent>
         </Card>
 

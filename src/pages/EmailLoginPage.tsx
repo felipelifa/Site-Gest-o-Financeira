@@ -222,6 +222,15 @@ const EmailLoginPage = () => {
                   Criar conta
                 </button>
               </p>
+              <p className="text-sm text-muted-foreground mt-2">
+                Quer comprar o app?{" "}
+                <button 
+                  onClick={() => navigate('/checkout')}
+                  className="text-primary hover:underline font-medium"
+                >
+                  Ir para checkout
+                </button>
+              </p>
             </div>
           </CardContent>
         </Card>
