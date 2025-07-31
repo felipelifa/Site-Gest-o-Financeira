@@ -58,9 +58,9 @@ serve(async (req) => {
         email: email
       },
       back_urls: {
-        success: `${Deno.env.get("SUPABASE_URL")?.replace('.supabase.co', '.lovableproject.com') || 'https://b74122dd-46e5-4810-be06-69f354a9f317.lovableproject.com'}/download?email=${encodeURIComponent(email)}&payment=success`,
-        failure: `${Deno.env.get("SUPABASE_URL")?.replace('.supabase.co', '.lovableproject.com') || 'https://b74122dd-46e5-4810-be06-69f354a9f317.lovableproject.com'}/download?email=${encodeURIComponent(email)}&payment=failure`,
-        pending: `${Deno.env.get("SUPABASE_URL")?.replace('.supabase.co', '.lovableproject.com') || 'https://b74122dd-46e5-4810-be06-69f354a9f317.lovableproject.com'}/download?email=${encodeURIComponent(email)}&payment=pending`
+        success: `https://0de83ccc-7698-4a20-94eb-e1bb72b741d3.lovableproject.com/create-account?email=${encodeURIComponent(email)}&payment=success`,
+        failure: `https://0de83ccc-7698-4a20-94eb-e1bb72b741d3.lovableproject.com/create-account?email=${encodeURIComponent(email)}&payment=failure`,
+        pending: `https://0de83ccc-7698-4a20-94eb-e1bb72b741d3.lovableproject.com/create-account?email=${encodeURIComponent(email)}&payment=pending`
       },
       auto_return: "approved",
       payment_methods: {

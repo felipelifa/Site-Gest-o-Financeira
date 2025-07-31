@@ -1,7 +1,7 @@
-import SalesSlides from "@/components/SalesSlides";
+import ImprovedSalesSlides from "@/components/ImprovedSalesSlides";
 
 const Index = () => {
-  return <SalesSlides />;
+  return <ImprovedSalesSlides />;
 };
 
 export default Index;

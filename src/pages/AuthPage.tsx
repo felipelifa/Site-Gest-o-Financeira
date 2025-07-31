@@ -96,6 +96,17 @@ const AuthPage = () => {
                 <TabsTrigger value="signup">Cadastrar</TabsTrigger>
               </TabsList>
               
+              {/* Link para login por email */}
+              <div className="text-center mb-4">
+                <Button
+                  variant="ghost"
+                  onClick={() => navigate('/email-login')}
+                  className="text-sm text-primary hover:underline"
+                >
+                  Já tem conta? Entre apenas com email
+                </Button>
+              </div>
+              
               <TabsContent value="login" className="space-y-4">
                 <form onSubmit={handleSignIn} className="space-y-4">
                   <div className="space-y-2">

@@ -103,6 +103,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           emailRedirectTo: redirectUrl,
           data: {
             full_name: fullName || email,
+            email_confirm: true, // Confirmar email automaticamente
           }
         }
       });
@@ -126,7 +127,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       } else {
         toast({
           title: "Conta criada! 🎉",
-          description: "Verifique seu e-mail para ativar a conta",
+          description: "Sua conta foi criada e ativada automaticamente",
         });
       }
 
