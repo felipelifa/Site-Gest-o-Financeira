@@ -81,28 +81,45 @@ const handleVerifyAccess = async () => {
 
   try {
     setVerifying(true);
-    console.log('🔥 SALES: Verificando acesso para email:', email);
-    
-    const { data, error } = await supabase.functions.invoke('verify-payment', {
-      body: { email }
+
+    const { data, error } = await supabase.functions.invoke("verify-payment", {
+      body: { email },
     });
 
-    console.log('🔥 SALES: Resposta do verify-payment:', { data, error });
+    if (error || !data) {
+      toast({
+        title: "Erro",
+        description: "Erro ao verificar pagamento. Tente novamente.",
+        variant: "destructive",
+      });
+      return;
+    }
 
-    if (error) throw error;
+    if (data.hasValidPayment && data.access_token && data.refresh_token) {
+      // Autenticar automaticamente com os tokens
+      const { error: authError } = await supabase.auth.setSession({
+        access_token: data.access_token,
+        refresh_token: data.refresh_token,
+      });
 
-    if (data.hasValidPayment) {
-      console.log('🔥 SALES: Acesso liberado! Redirecionando...');
+      if (authError) {
+        toast({
+          title: "Erro ao autenticar",
+          description: "Tente novamente.",
+          variant: "destructive",
+        });
+        return;
+      }
+
       toast({
         title: "Acesso liberado! 🎉",
-        description: "Redirecionando para a dashboard...",
+        description: "Redirecionando para o painel...",
       });
-      
+
       setTimeout(() => {
-        navigate(`/dashboard?email=${encodeURIComponent(email)}&verified=true`);
+        navigate("/dashboard");
       }, 1000);
     } else {
-      console.log('🔥 SALES: Acesso negado. Orders:', data.orders);
       toast({
         title: "Acesso negado",
         description: "Nenhum pagamento aprovado encontrado para este email.",
@@ -110,10 +127,9 @@ const handleVerifyAccess = async () => {
       });
     }
   } catch (error) {
-    console.error('🔥 SALES: Erro ao verificar pagamento:', error);
     toast({
-      title: "Erro",
-      description: "Erro ao verificar pagamento. Tente novamente.",
+      title: "Erro inesperado",
+      description: "Tente novamente.",
       variant: "destructive",
     });
   } finally {

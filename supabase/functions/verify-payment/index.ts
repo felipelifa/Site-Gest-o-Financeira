@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 
@@ -81,9 +80,38 @@ serve(async (req) => {
       orderStatuses: orders?.map(o => ({ id: o.id, status: o.status, email: o.email })) || []
     });
 
+    let access_token = null;
+    let refresh_token = null;
+
+    if (hasValidPayment) {
+      // Obter o usuário pelo email
+      const { data: userData, error: userError } = await supabaseClient.auth.admin.getUserByEmail(email);
+
+      if (!userData || userError) {
+        throw new Error("Usuário não encontrado no Supabase Auth.");
+      }
+
+      // Gerar link mágico com tokens (sem envio de e-mail)
+      const { data: linkData, error: linkError } = await supabaseClient.auth.admin.generateLink({
+        type: "magiclink",
+        email,
+      });
+
+      if (!linkData || linkError) {
+        throw new Error("Erro ao gerar sessão para o usuário.");
+      }
+
+      access_token = linkData.access_token;
+      refresh_token = linkData.refresh_token;
+
+      logStep("Tokens gerados com sucesso");
+    }
+
     return new Response(JSON.stringify({ 
       hasValidPayment,
       email,
+      access_token,
+      refresh_token,
       orders: orders || []
     }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
