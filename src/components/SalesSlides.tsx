@@ -166,7 +166,6 @@ const handleVerifyAccess = async () => {
       // Redirecionar para página de login por email
       navigate(`/email-login?email=${encodeURIComponent(email)}`);
       
->>>>>>> acafb590cfa065a3d4756c679796d4362bd4b2c8
     } catch (error) {
       console.error('Erro ao verificar acesso:', error);
       toast({
