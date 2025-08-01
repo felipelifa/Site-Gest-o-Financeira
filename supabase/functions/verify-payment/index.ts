@@ -92,17 +92,17 @@ serve(async (req) => {
       }
 
       // Gerar link mágico com tokens (sem envio de e-mail)
-      const { data: linkData, error: linkError } = await supabaseClient.auth.admin.generateLink({
-        type: "magiclink",
-        email,
-      });
+     const { data: sessionData, error: sessionError } = await supabaseClient.auth.admin.createUserSession({
+  user_id: userData.user.id,
+});
 
-      if (!linkData || linkError) {
-        throw new Error("Erro ao gerar sessão para o usuário.");
-      }
+if (sessionError || !sessionData) {
+  throw new Error("Erro ao criar sessão do usuário.");
+}
 
-      access_token = linkData.access_token;
-      refresh_token = linkData.refresh_token;
+access_token = sessionData.session.access_token;
+refresh_token = sessionData.session.refresh_token;
+
 
       logStep("Tokens gerados com sucesso");
     }
