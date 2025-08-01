@@ -49,10 +49,29 @@ const handleEmailLogin = async () => {
   try {
     setLoading(true);
 
-    const { data, error } = await supabase.auth.signInWithOtp({
+    // Verificar se o usuário existe
+    const { data: existingUser, error: userError } = await supabase.auth.admin.getUserByEmail(email);
+
+    if (userError || !existingUser?.user) {
+      toast({
+        title: "Conta não encontrada",
+        description: "Não encontramos uma conta com este email. Deseja criar uma conta?",
+        variant: "destructive",
+      });
+
+      setTimeout(() => {
+        if (confirm("Deseja criar uma conta com este email?")) {
+          navigate(`/create-account?email=${encodeURIComponent(email)}`);
+        }
+      }, 2000);
+      return;
+    }
+
+    // Enviar magic link para login
+    const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: "https://dindinmagico.netlify.app/dashboard", // <- altere se for outro domínio
+        emailRedirectTo: "https://dindinmagico.netlify.app/dashboard",
       },
     });
 
@@ -65,17 +84,20 @@ const handleEmailLogin = async () => {
       description: "Clique no link que enviamos para acessar sua conta.",
     });
 
-  } catch (error) {
+    setStep("success");
+
+  } catch (error: any) {
     console.error("Erro no login:", error);
     toast({
       title: "Erro ao entrar",
-      description: "Não conseguimos enviar o email. Tente novamente.",
+      description: error.message || "Não conseguimos enviar o email. Tente novamente.",
       variant: "destructive",
     });
   } finally {
     setLoading(false);
   }
 };
+
 
       
       // Verificar se o usuário existe
