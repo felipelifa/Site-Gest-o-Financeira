@@ -27,27 +27,56 @@ const EmailLoginPage = () => {
     }
   }, []);
 
-  const handleEmailLogin = async () => {
-    if (!email) {
-      toast({
-        title: "Email obrigatório",
-        description: "Digite seu email para acessar sua conta.",
-        variant: "destructive",
-      });
-      return;
+const handleEmailLogin = async () => {
+  if (!email) {
+    toast({
+      title: "Email obrigatório",
+      description: "Digite seu email para acessar sua conta.",
+      variant: "destructive",
+    });
+    return;
+  }
+
+  if (!email.includes("@")) {
+    toast({
+      title: "Email inválido",
+      description: "Digite um email válido.",
+      variant: "destructive",
+    });
+    return;
+  }
+
+  try {
+    setLoading(true);
+
+    const { data, error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: "https://dindinmagico.netlify.app/dashboard", // <- altere se for outro domínio
+      },
+    });
+
+    if (error) {
+      throw error;
     }
 
-    if (!email.includes("@")) {
-      toast({
-        title: "Email inválido",
-        description: "Digite um email válido.",
-        variant: "destructive",
-      });
-      return;
-    }
+    toast({
+      title: "Verifique seu email 📬",
+      description: "Clique no link que enviamos para acessar sua conta.",
+    });
 
-    try {
-      setLoading(true);
+  } catch (error) {
+    console.error("Erro no login:", error);
+    toast({
+      title: "Erro ao entrar",
+      description: "Não conseguimos enviar o email. Tente novamente.",
+      variant: "destructive",
+    });
+  } finally {
+    setLoading(false);
+  }
+};
+
       
       // Verificar se o usuário existe
       const { data: existingUser, error: userError } = await supabase.auth.admin.getUserByEmail(email);
