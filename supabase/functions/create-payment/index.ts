@@ -51,16 +51,16 @@ serve(async (req) => {
           description: "Aplicativo completo de controle financeiro",
           quantity: 1,
           currency_id: "BRL",
-          unit_price: 0.01
+          unit_price: 97.00
         }
       ],
       payer: {
         email: email
       },
       back_urls: {
-        success: `https://0de83ccc-7698-4a20-94eb-e1bb72b741d3.lovableproject.com/create-account?email=${encodeURIComponent(email)}&payment=success`,
-        failure: `https://0de83ccc-7698-4a20-94eb-e1bb72b741d3.lovableproject.com/create-account?email=${encodeURIComponent(email)}&payment=failure`,
-        pending: `https://0de83ccc-7698-4a20-94eb-e1bb72b741d3.lovableproject.com/create-account?email=${encodeURIComponent(email)}&payment=pending`
+        success: `https://0de83ccc-7698-4a20-94eb-e1bb72b741d3.lovableproject.com/?email=${encodeURIComponent(email)}&payment=success`,
+        failure: `https://0de83ccc-7698-4a20-94eb-e1bb72b741d3.lovableproject.com/?email=${encodeURIComponent(email)}&payment=failure`,
+        pending: `https://0de83ccc-7698-4a20-94eb-e1bb72b741d3.lovableproject.com/?email=${encodeURIComponent(email)}&payment=pending`
       },
       auto_return: "approved",
       payment_methods: {
@@ -112,7 +112,7 @@ serve(async (req) => {
     try {
       await supabaseClient.from("orders").insert({
         mercadopago_preference_id: preferenceData.id,
-        amount: 0.01,
+        amount: 97.00,
         currency: "BRL",
         status: "pending",
         product_name: "DinDin Mágico - Acesso Vitalício",

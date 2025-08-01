@@ -76,6 +76,17 @@ const CheckoutPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/20 via-background to-accent/20 flex items-center justify-center p-4">
       <div className="w-full max-w-md space-y-6">
+        {/* Back Button */}
+        <div className="text-center">
+          <Button
+            variant="ghost"
+            onClick={() => navigate('/')}
+            className="text-white/80 hover:text-white"
+          >
+            ← Voltar para o início
+          </Button>
+        </div>
+
         {/* Header */}
         <Card className="border-primary/20 bg-gradient-to-r from-primary/5 to-accent/5">
           <CardHeader className="text-center">
@@ -86,7 +97,7 @@ const CheckoutPage = () => {
             </div>
             <CardTitle className="text-2xl text-primary">DinDin Mágico</CardTitle>
             <p className="text-muted-foreground">
-              Acesso vitalício por apenas <span className="font-bold text-accent">R$ 0,01</span>
+              Acesso vitalício por apenas <span className="font-bold text-accent">R$ 97,00</span>
             </p>
           </CardHeader>
         </Card>
@@ -155,7 +166,7 @@ const CheckoutPage = () => {
               {loading ? (
                 <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
               ) : (
-                "Pagar R$ 0,01"
+                "Pagar R$ 97,00"
               )}
             </Button>
             
