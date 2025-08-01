@@ -95,7 +95,7 @@ const handleVerifyAccess = async () => {
       return;
     }
 
-<<<<<<< HEAD
+ HEAD
     if (data.hasValidPayment && data.access_token && data.refresh_token) {
       // Autenticar automaticamente com os tokens
       const { error: authError } = await supabase.auth.setSession({
