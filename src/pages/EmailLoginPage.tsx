@@ -49,30 +49,23 @@ const handleEmailLogin = async () => {
   try {
     setLoading(true);
 
-    // Verificar se o usuário existe
-    const { data: existingUser, error: userError } = await supabase.auth.admin.getUserByEmail(email);
+    // 1. Chamar função edge para verificar pagamento e gerar tokens
+    const response = await fetch("https://dindinmagico.netlify.app/.netlify/functions/index", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
 
-    if (userError || !existingUser?.user) {
-      toast({
-        title: "Conta não encontrada",
-        description: "Não encontramos uma conta com este email. Deseja criar uma conta?",
-        variant: "destructive",
-      });
+    const result = await response.json();
 
-      setTimeout(() => {
-        if (confirm("Deseja criar uma conta com este email?")) {
-          navigate(`/create-account?email=${encodeURIComponent(email)}`);
-        }
-      }, 2000);
-      return;
+    if (!result.hasValidPayment || !result.access_token || !result.refresh_token) {
+      throw new Error("Nenhum pagamento aprovado encontrado. Verifique seu email ou entre em contato com o suporte.");
     }
 
-    // Enviar magic link para login
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        emailRedirectTo: "https://dindinmagico.netlify.app/dashboard",
-      },
+    // 2. Usar tokens para logar o usuário automaticamente
+    const { error } = await supabase.auth.setSession({
+      access_token: result.access_token,
+      refresh_token: result.refresh_token,
     });
 
     if (error) {
@@ -80,23 +73,28 @@ const handleEmailLogin = async () => {
     }
 
     toast({
-      title: "Verifique seu email 📬",
-      description: "Clique no link que enviamos para acessar sua conta.",
+      title: "Login realizado! 🎉",
+      description: "Redirecionando para o dashboard...",
     });
 
     setStep("success");
 
+    setTimeout(() => {
+      navigate("/dashboard");
+    }, 2000);
+
   } catch (error: any) {
-    console.error("Erro no login:", error);
+    console.error("Erro ao logar:", error);
     toast({
-      title: "Erro ao entrar",
-      description: error.message || "Não conseguimos enviar o email. Tente novamente.",
+      title: "Erro no login",
+      description: error.message || "Não conseguimos validar o acesso.",
       variant: "destructive",
     });
   } finally {
     setLoading(false);
   }
 };
+
 
 
       
