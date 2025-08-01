@@ -99,7 +99,7 @@ const handleEmailLogin = async () => {
 
       
       // Verificar se o usuário existe
-      const { data: existingUser, error: userError } = await supabase.auth.admin.getUserByEmail(email);
+
 
       if (userError || !existingUser.user) {
         toast({
